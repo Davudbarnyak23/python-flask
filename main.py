@@ -1,17 +1,33 @@
 from flask import Flask, render_template
-import random
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+@app.route('/name')
+def index(name=""):
+    return render_template('index.html', name=name)
 
 
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/articles')
+def articles():
+    return render_template('articles.html')
+
+
+@app.route('/details')
+def details():
+    return render_template('details.html')
+
 
 # toko dla server
 if __name__ == '__main__':

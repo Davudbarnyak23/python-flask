@@ -16,12 +16,15 @@
         </nav>
     </header>
     <main>
+        {% extends "layout.html" %}
+
+        {% block content %}
         <section class="logo">
             <h1>Rediscover the world</h1>
             <p>The gladdest moment in human life,
             methinks, is a departure
             into unknown lands./section></p>
-
+        </section>
         <section class="about">
             <p>Editorial Foreword
             The World Travel Guide (WTG) is the flagship digital consumer brand within the Columbus Travel Media
@@ -34,6 +37,8 @@
                 Site Operator: Ctrip.com (Hong Kong) Limited
                 Hong Kong Travel License No. 352367</p>
         </footer>
+
+        {% endblock %}
     </main>
 </body>
 </html>

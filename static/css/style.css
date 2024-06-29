@@ -19,11 +19,41 @@
 .menu a:hover{
     background-color:rgb(100,100,100);
 }
+/*--- main ---*/
 
 
+/*--- logo ---*/
 .logo{
     height: 650px;
-    background-image: utl('../images/aleksandr.jpg')
+    background-image: utl('../images/aleksandr.jpg');
     background-size: cover;
     text-align: center;
+}
+.logo h1{
+    color: black;
+    font-size: 74px;
+    padding-top: 140px;
+}
+.logo p{
+    color: black;
+    font-size: 30px;
+    padding-top: 90px;
+}
+.about{
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    line-height: 40px;
+    text-indent: 30px;
+    text-align: justify;
+    padding: 80px 30px;
+}
+
+/*--- footer ---*/
+footer{
+    background-color: black;
+    color: white;
+    fotn-size: 15 px;
+    text-align: center;
+    padding: 30px;
 }

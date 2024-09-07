@@ -4,9 +4,8 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/name')
-def index(name=""):
-    return render_template('index.html', name=name)
+def index():
+    return render_template('index.html')
 
 
 @app.route('/login')
@@ -16,12 +15,15 @@ def login():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html',title='About')
 
 
 @app.route('/articles')
 def articles():
-    return render_template('articles.html')
+    new_articles = ['How to avoid expensive travel mistakes', 'Top 5 places to experience supernatural forces',
+                    'Three wonderfully bizarre Mexican festivals', 'The 20 greenest destinations on Earth',
+                    'How to survive on a desert island']
+    return render_template('articles.html', articles=new_articles)
 
 
 @app.route('/details')
@@ -29,6 +31,6 @@ def details():
     return render_template('details.html')
 
 
-# toko dla server
+# Лише для локаотного сервера (закоментувати)
 if __name__ == '__main__':
     app.run(debug=True)

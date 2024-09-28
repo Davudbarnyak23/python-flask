@@ -1,6 +1,10 @@
+from datetime import datetime
+from flask import request
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 import os
+
+from sqlalchemy import Integer
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -16,12 +20,28 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(150), nullable=False)
     password = db.Column(db.String(50), nullable=False)
+    role = db.Column(db.Integer(), default=0, nullable=False)
 
     def __repr__(self):
         return f'<User {self.username}>'
 
+
+#class Posts(db.Model):
+#    __tablename__ = 'Posts'
+#    id = db.Column(Integer, primary_key=True)
+#    post_name = db.Column(db.Sring(255), nullable=False)
+#    post_text = db.Column(db.Text(), nullable=False)
+#    post_image = db.Column(db.String(255), numllable=False)
+ #   concurrent = db.Column(db.String(255), numllable=False)
+    #created_on = db.Column(db.Date(), default=datetime.utcnow)
+
+#!!!
 with app.app_context():
     db.create_all()
+
+@app.route('/add_post')
+def add_post():
+    return render_template('add_post.html')
 
 
 @app.route('/')
@@ -38,6 +58,21 @@ def login():
 def about():
     return render_template('about.html',title='About')
 
+
+@app.route('/add_user', methods=['GET', 'POST'])
+def add_user():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+
+        new_user = User(username=username, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return render_template ('index.html')
+    else:
+        return render_template ('add_user.html')
 
 @app.route('/articles')
 def articles():

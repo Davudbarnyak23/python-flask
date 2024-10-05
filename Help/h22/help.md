@@ -82,7 +82,7 @@ Jinja2 підтримує концепцію наступних шаблонів
         <h1>{% block header %}Заголовок{% endblock %}</h1>
     </header>
     <main>
-        {% block content %}{% endblock %}
+        {% block main %}{% endblock %}
     </main>
 </body>
 </html>
@@ -97,7 +97,7 @@ Jinja2 підтримує концепцію наступних шаблонів
 
 {% block header %}Вітаємо на домашній сторінці{% endblock %}
 
-{% block content %}
+{% block main %}
     <p>Це головний контент сторінки.</p>
 {% endblock %}
 

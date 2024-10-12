@@ -1,6 +1,5 @@
-from crypt import methods
 from datetime import datetime
-from flask import Flask
+from flask import Flask, request, session, redirect
 from flask import request
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'da
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+app.secret_key = 'w0x2A7gQ8phOJvPKQhRx2ybX3_4SCbNX7DPnMyg2zMo'
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -44,7 +44,8 @@ class Posts(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    x = session.get('username')
+    return render_template('index.html', username=x)
 
 
 @app.route('/articles')
@@ -84,7 +85,6 @@ def delete_post():
         for id in id_list:
             row = Posts.query.filter_by(id=id).first()
             db.session.delete()
-
         db.session.commit()
 
     articles = Posts.query.all()
@@ -98,10 +98,35 @@ def details():
     return render_template('details.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET'])
 def login():
-    massage = 'Enter you login and password'
+    message = 'Enter you login and password'
     return render_template('login.html', message=message)
+
+@app.route('/login', methods=['POST'])
+def login_user():
+    message = ''
+    #...
+    email = request.form['email']
+    password = request.form['password']
+
+    user = User.query.filter_by(email=email).first()
+
+
+    if not user:
+        message = 'Enter correct email'
+        return render_template('login.html', message=message)
+    else:
+        if user.password != password:
+            message = 'Entercorrect password'
+            return render_template('login.html', message=message)
+        else:
+            session['username'] = user.username
+            return render_template('index.html')
+
+    return render_template('login.html', message=message)
+
+@app.route('/logout')
 
 
 
@@ -112,6 +137,9 @@ def about():
 
 @app.route('/add_user', methods=['GET', 'POST'])
 def add_user():
+    if not session.get('username'):
+        return redirect('/login')
+
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
@@ -123,7 +151,9 @@ def add_user():
 
         return render_template('index.html')
     else:
-        return render_template('add_user.html')
+        session['username'] = user.username
+        return redirect('/')
+        #return render_template('add_user.html')
 
 
 # Only for local server (deleted)

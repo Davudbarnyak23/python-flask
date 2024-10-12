@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+<form name="login" method="post" action="/login">
+    <h2>login</h2>
+    <p>{{ message }}</p>
+
+    <input name="emali" type="text" required placeholder="youn email">
+    <br>
+    <input name="password" type="password" required placeholder="you pass">
+    <br>
+
+    <button name="submit" type="submit">log in</button>
+
+</form>
+
+{% endblock %}
